@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-start">Symbol</th>
+                <th class="text-end">Shares</th>
+                <th class="text-end">Transaction type</th>
+                <th class="text-end">Price</th>
+                <th class="text-end">Transacted</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for purchase in purchases %}
+                <tr>
+                    <td class="text-start">{{ purchase.stock_symbol }}</td>
+                    <td class="text-end">{{ purchase.no_of_stocks }}</td>
+                    <td class="text-end">{{ purchase.transaction_type }}</td>
+                    <td class="text-end">{{ purchase.price | usd }}</td>
+                    <td class="text-end">{{ purchase.time }}</td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+
+{% endblock %}

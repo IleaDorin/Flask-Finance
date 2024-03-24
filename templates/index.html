@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+
+{% set my_dict = {'sum': 0} %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-start">Symbol</th>
+            <th class="text-start">Name</th>
+            <th class="text-end">Shares</th>
+            <th class="text-end">Price</th>
+            <th class="text-end">TOTAL</th>
+        </tr>
+    </thead>
+   <tbody>
+
+        {% for user_stock in user_stocks %}
+            <tr>
+                <td class="text-start">{{ user_stock.stock_name }}</td>
+                <td class="text-start">{{ user_stock.stock_name }}</td>
+                <td class="text-end">{{ user_stock.no_of_shares }}</td>
+                <td class="text-end">{{ usd(user_stock.price) }}</td>
+                <td class="text-end">{{ usd(user_stock.no_of_shares * user_stock.price) }}</td>
+            </tr>
+            {% set _ = my_dict.update({'sum': my_dict['sum'] + user_stock.no_of_shares * user_stock.price}) %}
+        {%endfor %}
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">Cash</td>
+            <td class="border-0 text-end">{{ user_info_cash | usd }}</td>
+        </tr>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">TOTAL</td>
+            <td class="border-0 w-bold text-end"> {{ (my_dict['sum'] | round(2) + user_info_cash) | usd }}</td>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}
